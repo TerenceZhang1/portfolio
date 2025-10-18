@@ -1,3 +1,9 @@
+html {
+  color-scheme: light dark;
+  --color-accent: oklch(58.078% 0.21098 265.275);
+  accent-color: var(--color-accent);
+}
+
 body {
   font: 100%/1.5 system-ui;
   max-width: 100ch;
@@ -18,6 +24,7 @@ nav li {
 }
 
 nav{
+  --border-color: oklch(50% 10% 200 / 40%);
   display:flex;
   margin-bottom: 1.25rem;
   border-bottom: 1px solid oklch(80% 3% 200);
@@ -34,7 +41,7 @@ nav a {
 }
 
 nav a.current {
-  border-bottom-color: oklch(80% 3% 200);
+  border-bottom-color: var(--border-color);
   padding-bottom: calc(0.5em - 0.4em);
 }
 
@@ -45,8 +52,9 @@ html {
 
 nav a:hover {
   border-bottom-color: var(--color-accent);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 }
+
 
 .contact-form,
 .contact-form * {
@@ -148,4 +156,15 @@ section > article time {
 section > article p { 
   grid-column: 1 / -1; 
   margin: .25rem 0; 
+}
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font: inherit;
+}
+
+.color-scheme select {
+  margin-left: 0.5em;
 }
