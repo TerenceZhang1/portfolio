@@ -168,3 +168,11 @@ section > article p {
 .color-scheme select {
   margin-left: 0.5em;
 }
+
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .5rem 1rem;
+}
+.grid-stats dt { grid-row: 1; font-weight: 600; }
+.grid-stats dd { grid-row: 2; margin: 0; }

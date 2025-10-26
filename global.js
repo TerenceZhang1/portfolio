@@ -83,3 +83,61 @@ form?.addEventListener('submit', (event) => {
   url += params.join('&');
   location.href = url;
 });
+
+
+
+export async function fetchJSON(url) {
+  try {
+    // Fetch the JSON file from the given URL
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error('Error fetching or parsing JSON data:', error);
+  }
+}
+
+export function renderProjects(projects, containerElement, headingLevel = 'h2') {
+  if (!(containerElement instanceof Element)) return;
+  const valid = new Set(['h1','h2','h3','h4','h5','h6']);
+  const tag = valid.has(String(headingLevel).toLowerCase()) ? String(headingLevel).toLowerCase() : 'h2';
+  const list = Array.isArray(projects) ? projects : (projects ? [projects] : []);
+  containerElement.innerHTML = '';
+  if (list.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'projects-empty';
+    p.textContent = 'No projects to display.';
+    containerElement.appendChild(p);
+    return;
+  }
+  for (const proj of list) {
+    const title = proj?.title ?? 'Untitled Project';
+    const imgSrc = proj?.image ?? '';
+    const desc = proj?.description ?? '';
+    const article = document.createElement('article');
+    const heading = document.createElement(tag);
+    heading.textContent = title;
+    article.appendChild(heading);
+    if (imgSrc) {
+      const img = document.createElement('img');
+      img.src = imgSrc;
+      img.alt = title || 'Project image';
+      article.appendChild(img);
+    }
+    const p = document.createElement('p');
+    p.textContent = desc;
+    article.appendChild(p);
+    containerElement.appendChild(article);
+  }
+}
+
+export async function fetchGitHubData(username) {
+  if (!username) return null;
+  return fetchJSON(`https://api.github.com/users/${encodeURIComponent(username)}`);
+}
