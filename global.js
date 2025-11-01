@@ -120,6 +120,7 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
     const title = proj?.title ?? 'Untitled Project';
     const imgSrc = proj?.image ?? '';
     const desc = proj?.description ?? '';
+    const year = proj?.year ?? '';
     const article = document.createElement('article');
     const heading = document.createElement(tag);
     heading.textContent = title;
@@ -130,9 +131,18 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
       img.alt = title || 'Project image';
       article.appendChild(img);
     }
+    
     const p = document.createElement('p');
     p.textContent = desc;
-    article.appendChild(p);
+    const textDiv = document.createElement('div');
+    textDiv.appendChild(p);
+
+    const y = document.createElement('p');
+    y.textContent = "Year: "+year;
+    y.classList.add('project-year');
+    textDiv.appendChild(y);
+    article.appendChild(textDiv);
+
     containerElement.appendChild(article);
   }
 }

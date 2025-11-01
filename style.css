@@ -176,3 +176,75 @@ section > article p {
 }
 .grid-stats dt { grid-row: 1; font-weight: 600; }
 .grid-stats dd { grid-row: 2; margin: 0; }
+
+
+#projects-pie-plot {
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+}
+
+.pie-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-block: 1rem;
+}
+.pie-container .legend {
+  flex: 1;
+}
+
+.legend {
+  list-style: none;
+  padding: 0.75rem;
+  margin: 0;
+  border: 1px solid oklch(85% 0.02 200);
+  border-radius: 0.5rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.legend__swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  aspect-ratio: 1 / 1;
+  background: var(--color);
+  border-radius: 0.25em;
+}
+.legend__item em {
+  font-style: normal;
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .pie-container {
+    flex-direction: column;
+  }
+}
+
+path {
+  cursor: pointer;
+  transition: 300ms;
+}
+
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+
+.selected:is(path) {
+  fill: var(--color);
+}

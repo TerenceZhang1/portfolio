@@ -1,27 +1,27 @@
 [
     {
-        "title": "Lorem ipsum dolor sit.",
-        "year": "2024",
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos temporibus reprehenderit, ullam ipsa non nihil quisquam nostrum. Sint culpa ad accusamus maxime velit asperiores illo temporibus. Necessitatibus nemo cumque eius."
+        "title": "How Food Processing Relates to Price-Per-Calorie Across Major Grocery Stores",
+        "year": "2025",
+        "image": "../images/project1_food_processing_price.png",
+        "description": "This visualization analyzes grocery items from Walmart, Target, and Whole Foods to reveal how the level of food processing relates to the respective price per calorie. "
     },
     {
-        "title": "Perspiciatis, quidem earum? Quos.",
-        "year": "2024",
+        "title": "Civilian Complaints Against NYPD Officers: Perception vs. Reality",
+        "year": "2025",
 
-        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-        "description": "Dignissimos cum tenetur eos laboriosam ducimus repellat eligendi alias eaque corrupti praesentium animi, deserunt quaerat fuga. Suscipit quisquam atque totam fugit alias et eveniet quis cumque, perferendis rem, nesciunt possimus?"
+        "image": "../images/image.png",
+        "description": "This visualization shows how design choices can be deceiving and shap public perception of NYPD misconduct data."
     },
     {
         "title": "Voluptas cumque id iure.",
-        "year": "2024",
+        "year": "2023",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Cupiditate placeat praesentium modi illum totam accusamus nobis ad nihil, in explicabo optio non sit doloremque voluptas nulla quod vel veritatis sed officia neque ullam esse! Illum harum vel error."
     },
     {
         "title": "Sequi ullam magni repellendus?",
-        "year": "2024",
+        "year": "2020",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Architecto adipisci doloremque modi magnam. Libero, et. Voluptatem debitis, quos commodi expedita rerum ipsum delectus fugit dolorum quis laboriosam tenetur tempora quod fugiat omnis sapiente natus quo, accusamus fuga eveniet."
@@ -35,21 +35,21 @@
     },
     {
         "title": "Minima doloremque quis maiores!",
-        "year": "2024",
+        "year": "2025",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Nemo enim provident quasi maiores obcaecati ipsam veritatis iure incidunt? Ipsam, fuga impedit. Ducimus, ratione. Esse, exercitationem! Voluptate explicabo nihil quaerat quisquam tempore sequi, ex, illo architecto veritatis dolorum quo?"
     },
     {
         "title": "Obcaecati repellat quia fugiat!",
-        "year": "2024",
+        "year": "2018",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Aspernatur reiciendis inventore consequatur quae aperiam ipsum modi exercitationem cum. Cumque totam impedit quas rem modi iusto mollitia sunt! Autem deleniti reiciendis delectus minima adipisci eligendi expedita eveniet? Culpa, veritatis?"
     },
     {
         "title": "Accusantium quos velit non.",
-        "year": "2024",
+        "year": "2022",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Quibusdam aut cumque rem incidunt perspiciatis dolore animi. Cumque quaerat modi eligendi debitis nesciunt vitae, dicta, nostrum mollitia commodi deserunt perspiciatis, quae culpa. Corrupti, labore. Atque excepturi magnam doloremque error."
@@ -70,14 +70,14 @@
     },
     {
         "title": "A eaque autem odio!",
-        "year": "2024",
+        "year": "2025",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Laudantium, nesciunt repellendus maxime, officia sunt rem itaque saepe blanditiis optio aperiam iste inventore ipsum architecto animi sapiente quas. Omnis voluptates optio assumenda porro hic iusto. Quidem libero aspernatur est."
     },
     {
         "title": "Consequuntur ex dicta voluptatibus.",
-        "year": "2024",
+        "year": "2023",
 
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "Sunt, perferendis quidem! Nobis atque laudantium esse non voluptatibus id pariatur officia explicabo, ratione fuga repudiandae doloribus eius repellat dolor sunt. Incidunt quasi suscipit debitis. Totam qui corporis quod voluptates?"
