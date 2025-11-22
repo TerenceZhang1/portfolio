@@ -1,5 +1,11 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
+let commitProgress = 100;
+let timeScale;
+let commitMaxTime;
+let filteredCommits = [];
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
 async function loadData() {
 	const data = await d3.csv('loc.csv', (row) => ({
 		...row,
@@ -107,7 +113,7 @@ function renderCommitInfo(data, commits) {
 function renderTooltipContent(commit) {
 	const link = document.getElementById('commit-link');
 	const date = document.getElementById('commit-date');
-	const time = document.getElementById('commit-time');
+	const time = document.getElementById('commit-tooltip-time');
 	const author = document.getElementById('commit-author');
 	const lines = document.getElementById('commit-lines');
 	if (Object.keys(commit).length === 0) return;
@@ -210,7 +216,7 @@ function renderScatterPlot(data, commits) {
 	const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 	dots
 		.selectAll('circle')
-		.data(sortedCommits)
+		.data(sortedCommits, (d) => d.id)
 		.join('circle')
 		.attr('cx', (d) => xScale(d.datetime))
 		.attr('cy', (d) => yScale(d.hourFrac))
@@ -239,8 +245,126 @@ function renderScatterPlot(data, commits) {
 	svg.call(brush);
 	svg.selectAll('.dots, .overlay ~ *').raise();
 }
+function updateScatterPlot(data, commitsToShow) {
+  const svg = d3.select('#chart').select('svg');
+
+  const usableLeft = 40;
+  const usableRight = 1000 - 10;
+  const usableBottom = 600 - 30;
+
+  const xScale = d3.scaleTime()
+    .domain(d3.extent(commitsToShow, d => d.datetime))
+    .range([usableLeft, usableRight])
+    .nice();
+
+  const yScale = d3.scaleLinear()
+    .domain([0, 24])
+    .range([usableBottom, 10]);
+
+  const [minLines, maxLines] = d3.extent(commitsToShow, d => d.totalLines);
+  const rScale = d3.scaleSqrt()
+    .domain([minLines ?? 0, maxLines ?? 1])
+    .range([2, 30]);
+
+  const xAxis = d3.axisBottom(xScale);
+  const xAxisGroup = svg.select('g').filter(function () {
+    return d3.select(this).attr('transform')?.includes(`translate(0,${usableBottom})`);
+  });
+  xAxisGroup.call(xAxis);
+
+  const dots = svg.select('g.dots');
+  const sortedCommits = d3.sort(commitsToShow, d => -d.totalLines);
+
+  dots.selectAll('circle')
+    .data(sortedCommits, d => d.id)
+    .join(
+      enter => enter.append('circle')
+        .attr('cx', d => xScale(d.datetime))
+        .attr('cy', d => yScale(d.hourFrac))
+        .attr('r', 0)
+        .attr('fill', 'steelblue')
+        .style('fill-opacity', 0.7)
+        .on('mouseenter', (event, commit) => {
+          d3.select(event.currentTarget).style('fill-opacity', 1);
+          renderTooltipContent(commit);
+          updateTooltipVisibility(true);
+          updateTooltipPosition(event);
+        })
+        .on('mouseleave', (event) => {
+          d3.select(event.currentTarget).style('fill-opacity', 0.7);
+          updateTooltipVisibility(false);
+        }),
+      update => update,
+      exit => exit.remove()
+    )
+    .transition()
+    .duration(300)
+    .attr('cx', d => xScale(d.datetime))
+    .attr('cy', d => yScale(d.hourFrac))
+    .attr('r', d => rScale(d.totalLines));
+}
+
 
 const data = await loadData();
 const commits = processCommits(data);
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
+
+timeScale = d3.scaleTime()
+  .domain(d3.extent(commits, d => d.datetime))
+  .range([0, 100]);
+
+commitMaxTime = timeScale.invert(commitProgress);
+filteredCommits = commits; 
+
+const slider = document.querySelector('#commit-progress');
+const timeEl = document.querySelector('#commit-time');
+
+function onTimeSliderChange() {
+  commitProgress = +slider.value;
+  commitMaxTime = timeScale.invert(commitProgress);
+
+  timeEl.textContent = commitMaxTime.toLocaleString('en', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  });
+
+  filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
+
+  updateScatterPlot(data, filteredCommits);
+  updateFileDisplay(filteredCommits);
+}
+
+slider.addEventListener('input', onTimeSliderChange);
+
+onTimeSliderChange();
+
+function updateFileDisplay(commitsSubset) {
+  const lines = commitsSubset.flatMap(d => d.lines);
+
+  const files = d3.groups(lines, d => d.file)
+    .map(([name, lines]) => ({ name, lines }))
+    .sort((a, b) => b.lines.length - a.lines.length);
+
+  const filesContainer = d3.select('#files')
+	.selectAll('div')
+	.data(files, d => d.name)
+	.join(
+		enter => enter.append('div').call(div => {
+			div.append('dt').append('code');
+			div.append('dd');
+		})
+  )
+  .attr('style', d => `--color: ${colors(d.lines[0].type)}`);
+
+  filesContainer
+    .select('dt > code')
+    .html(d => `${d.name}<br><small>${d.lines.length} lines</small>`);
+
+  filesContainer
+    .select('dd')
+    .selectAll('div')
+    .data(d => d.lines)
+    .join('div')
+    .attr('class', 'loc');
+}
