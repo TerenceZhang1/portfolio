@@ -379,3 +379,26 @@ circle.selected { fill: #ff6b6b; }
   border-radius: 50%;
   background: var(--color);
 }
+
+
+#scrolly-1 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+#scrolly-1 > * {
+  flex: 1;
+}
+
+#scatter-plot {
+  position: sticky;
+  top: 0;
+  height: 70vh;
+}
+
+#scatter-story .step {
+  margin-bottom: 70vh;
+  padding-bottom: 2rem;
+}
